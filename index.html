@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kitsuneseisei</title>
+    
+</head>
+<body>
+   
+    <h1>キツネ生成</h1> 
+    <div>
+        <input type="text" placeholder="キツネの名前" id="kitsune-name">
+        <button onclick="kitsuneYobikomu()">キツネを読み込む</button>
+    </div>
+    <section id="kitsune-list">
+    </section>
+    <script>
+        async function loadkitsune(){
+            let res = await fetch('https://randomfox.ca/floof/')
+            let data = await res.json()
+            return data
+        }
+        function randomNumber(min,max) {
+            let a = Math.floor(Math.random()*(max + 1 - min) + min)
+            return a
+        }
+        function kitsuneYobikomu() {
+            let list = document.querySelector('#kitsune-list')
+            let name = document.querySelector('#kitsune-name')
+            if (name.value === '') {return}
+            // let num = randomNumber(1,2)
+            // let imgSrc = './img' + num + '.jpeg'
+            loadkitsune().then(function(data){
+                let imgSrc = data.image
+                let imgTag = '<img src="'+ imgSrc + '">'
+                list.innerHTML = '<div>' + '<h3>' + name.value + '</h3>' + imgTag + '</div>' + list.innerHTML
+                name.value = ''
+                console.log(imgTag);
+            })
+            
+        }
+
+        
+    </script>
+
+   
+</body>
+</html>
